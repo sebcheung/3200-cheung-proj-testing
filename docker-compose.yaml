@@ -1,13 +1,13 @@
-services:
+services:  # aka containers
   app:
-    build: ./app
+    build: ./app  # goes into app folder and looks for docker file (sets up a custom image)
     container_name: web-app
     hostname: web-app
-    volumes: ["./app/src:/appcode"]
+    volumes: ["./app/src:/appcode"]  # local:container
     ports:
       - 8501:8501
 
-  api:
+  api:  # api ocntainer
     build: ./api
     container_name: web-api
     hostname: web-api
@@ -15,13 +15,13 @@ services:
     ports:
       - 4000:4000
 
-  db:
+  db:  # MySQL container
     env_file:
       - ./api/.env
     image: mysql:9
     container_name: mysql_db
     hostname: db
     volumes:
-      - ./database-files:/docker-entrypoint-initdb.d/:ro
+      - ./database-files:/docker-entrypoint-initdb.d/:ro  # database folder automatically uploads into container
     ports:
       - 3200:3306
